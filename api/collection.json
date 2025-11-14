@@ -249,6 +249,392 @@
         }
       ],
       "description": "Endpoint de verificação de saúde da API"
+    },
+    {
+      "name": "Accounts",
+      "item": [
+        {
+          "name": "Create Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Conta Corrente\",\n  \"type\": \"checking\",\n  \"initialBalance\": 1000.00,\n  \"currency\": \"BRL\",\n  \"color\": \"#4CAF50\",\n  \"icon\": \"bank\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Cria uma nova conta com saldo inicial. Tipos: checking, savings, investment, cash. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Lista todas as contas do usuário autenticado. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Account by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "account-uuid-here"
+                }
+              ]
+            },
+            "description": "Retorna detalhes de uma conta específica. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Account",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Conta Corrente Principal\",\n  \"color\": \"#2196F3\",\n  \"icon\": \"account_balance\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "account-uuid-here"
+                }
+              ]
+            },
+            "description": "Atualiza informações de uma conta. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "account-uuid-here"
+                }
+              ]
+            },
+            "description": "Desativa uma conta (soft delete). Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Account Balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/:id/balance",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", ":id", "balance"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "account-uuid-here"
+                }
+              ]
+            },
+            "description": "Retorna o saldo atual de uma conta. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Total Balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/balance/total",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "balance", "total"]
+            },
+            "description": "Retorna o saldo total de todas as contas ativas. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Account Transactions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/:id/transactions?limit=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", ":id", "transactions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Número máximo de transações a retornar (padrão: 50)"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "account-uuid-here"
+                }
+              ]
+            },
+            "description": "Retorna o extrato de transações de uma conta específica. Requer autenticação."
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para gerenciamento de contas bancárias"
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Create Income Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": \"account-uuid-here\",\n  \"type\": \"income\",\n  \"category\": \"Salário\",\n  \"amount\": 5000.00,\n  \"description\": \"Salário mensal\",\n  \"date\": \"2025-11-14T10:00:00Z\",\n  \"tags\": [\"recorrente\", \"trabalho\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transactions",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions"]
+            },
+            "description": "Cria uma transação de receita. O saldo da conta é atualizado automaticamente. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Expense Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": \"account-uuid-here\",\n  \"type\": \"expense\",\n  \"category\": \"Alimentação\",\n  \"amount\": 150.00,\n  \"description\": \"Compras no supermercado\",\n  \"date\": \"2025-11-14T15:30:00Z\",\n  \"tags\": [\"supermercado\", \"necessário\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transactions",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions"]
+            },
+            "description": "Cria uma transação de despesa. O saldo da conta é atualizado automaticamente. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Transfer Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": \"source-account-uuid\",\n  \"type\": \"transfer\",\n  \"category\": \"Transferência\",\n  \"amount\": 500.00,\n  \"description\": \"Transferência entre contas\",\n  \"date\": \"2025-11-14T12:00:00Z\",\n  \"relatedAccountId\": \"target-account-uuid\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transactions",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions"]
+            },
+            "description": "Cria uma transferência entre contas. Cria automaticamente duas transações (saída e entrada). Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Transactions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transactions?limit=100",
+              "host": ["{{baseUrl}}"],
+              "path": ["transactions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Número máximo de transações a retornar (padrão: 100)"
+                }
+              ]
+            },
+            "description": "Retorna todas as transações do usuário autenticado. Requer autenticação."
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para gerenciamento de transações financeiras (extrato)"
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile"]
+            },
+            "description": "Retorna o perfil completo do usuário autenticado. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+55 11 99999-9999\",\n  \"avatar\": \"https://example.com/avatar.jpg\",\n  \"bio\": \"Desenvolvedor apaixonado por tecnologia\",\n  \"address\": \"Rua Exemplo, 123\",\n  \"city\": \"São Paulo\",\n  \"state\": \"SP\",\n  \"country\": \"Brazil\",\n  \"zipCode\": \"01234-567\",\n  \"language\": \"pt-BR\",\n  \"theme\": \"dark\",\n  \"currency\": \"BRL\",\n  \"timezone\": \"America/Sao_Paulo\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile"]
+            },
+            "description": "Atualiza informações do perfil do usuário. Todos os campos são opcionais. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Subscription",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"planType\": \"premium\",\n  \"subscriptionEndDate\": \"2026-11-14T00:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/profile/subscription",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile", "subscription"]
+            },
+            "description": "Atualiza o plano de assinatura do usuário. Planos: free, premium, business. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/profile/subscription/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile", "subscription", "cancel"]
+            },
+            "description": "Cancela a assinatura do usuário, voltando para o plano free. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Notifications",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notificationsEnabled\": true,\n  \"emailNotifications\": true,\n  \"pushNotifications\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/profile/notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile", "notifications"]
+            },
+            "description": "Atualiza preferências de notificações do usuário. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate Profile",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["profile"]
+            },
+            "description": "Desativa o perfil do usuário (soft delete). Requer autenticação."
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para gerenciamento de perfil do usuário, preferências e assinatura"
     }
   ],
   "event": [

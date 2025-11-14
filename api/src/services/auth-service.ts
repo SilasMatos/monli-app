@@ -8,6 +8,8 @@ import { eq } from 'drizzle-orm'
 import { env } from '../env'
 import { uuidv7 } from 'uuidv7'
 import { emailService } from './email-service'
+import { profileService } from './profile-service'
+import { walletService } from './account-service'
 
 export interface RegisterData {
   email: string
@@ -121,6 +123,24 @@ export class AuthService {
     emailService.sendWelcomeEmail(newUser.email, newUser.name || undefined).catch(error => {
       console.error('Failed to send welcome email:', error)
     })
+
+    // Create user profile with default values
+    try {
+      await profileService.createProfile({
+        userId: newUser.id,
+      })
+    } catch (error) {
+      console.error('Failed to create user profile:', error)
+    }
+
+    // Create user wallet
+    try {
+      await walletService.createWallet({
+        userId: newUser.id,
+      })
+    } catch (error) {
+      console.error('Failed to create user wallet:', error)
+    }
 
     const tokens = this.generateTokens({
       userId: newUser.id,

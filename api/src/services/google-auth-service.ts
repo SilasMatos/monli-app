@@ -4,6 +4,8 @@ import { users, accessLogs } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { env } from '../env'
 import { authService } from './auth-service'
+import { profileService } from './profile-service'
+import { walletService } from './account-service'
 import { uuidv7 } from 'uuidv7'
 
 export class GoogleAuthService {
@@ -104,6 +106,24 @@ export class GoogleAuthService {
         .returning()
 
       user = newUser
+
+      // Create user profile for new Google user
+      try {
+        await profileService.createProfile({
+          userId: newUser.id,
+        })
+      } catch (error) {
+        console.error('Failed to create user profile:', error)
+      }
+
+      // Create user wallet
+      try {
+        await walletService.createWallet({
+          userId: newUser.id,
+        })
+      } catch (error) {
+        console.error('Failed to create user wallet:', error)
+      }
     } else {
       // Update tokens if user exists
       await db

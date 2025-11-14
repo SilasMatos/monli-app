@@ -1,2 +1,6 @@
 export * from './users'
 export * from './access-logs'
+export * from './wallets'
+export * from './transactions'
+export * from './user-profiles'
+export * from './wallet-history'

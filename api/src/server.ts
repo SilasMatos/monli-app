@@ -10,6 +10,8 @@ import { fastifyCors} from '@fastify/cors'
 import fastifyCookie from '@fastify/cookie'
 import ScalarApiReference from '@scalar/fastify-api-reference'
 import { authRoutes } from './routes/auth-routes'
+import { accountRoutes } from './routes/account-routes'
+import { profileRoutes } from './routes/profile-routes'
 import { env } from './env'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -63,6 +65,8 @@ app.get('/health', async () => {
 
 // Register routes
 app.register(authRoutes)
+app.register(accountRoutes)
+app.register(profileRoutes)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
 	console.log('🚀 HTTP server running on http://localhost:3333')
