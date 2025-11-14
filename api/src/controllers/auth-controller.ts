@@ -64,7 +64,16 @@ export class AuthController {
         twoFactorCode?: string
       }
 
-      const result = await authService.login({ email, password, twoFactorCode })
+      const ipAddress = request.ip
+      const userAgent = request.headers['user-agent']
+
+      const result = await authService.login({ 
+        email, 
+        password, 
+        twoFactorCode,
+        ipAddress,
+        userAgent,
+      })
 
       // If 2FA is required, don't set cookies yet
       if ('requiresTwoFactor' in result && result.requiresTwoFactor) {
@@ -103,6 +112,8 @@ export class AuthController {
         success: true,
         data: {
           user: result.user,
+          isFirstLoginEver: result.isFirstLoginEver,
+          isFirstLoginToday: result.isFirstLoginToday,
         },
       })
     } catch (error) {
@@ -369,7 +380,7 @@ export class AuthController {
       })
 
       // Redirect to frontend
-      return reply.redirect(`${process.env.FRONTEND_URL}/auth/callback?success=true`)
+      return reply.redirect(`${process.env.FRONTEND_URL}/auth/callback?success=true&isFirstLoginEver=${result.isFirstLoginEver}&isFirstLoginToday=${result.isFirstLoginToday}`)
     } catch (error) {
       console.error('Google OAuth error:', error)
       return reply.redirect(`${process.env.FRONTEND_URL}/auth/callback?error=auth_failed`)

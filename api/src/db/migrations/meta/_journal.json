@@ -15,6 +15,20 @@
       "when": 1763073782685,
       "tag": "0001_wet_warpath",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1763129615253,
+      "tag": "0002_nasty_fat_cobra",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1763129901782,
+      "tag": "0003_fantastic_avengers",
+      "breakpoints": true
     }
   ]
 }

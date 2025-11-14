@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import speakeasy from 'speakeasy'
 import QRCode from 'qrcode'
 import { db } from '../db'
-import { users } from '../db/schema'
+import { users, accessLogs } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { env } from '../env'
 import { uuidv7 } from 'uuidv7'
@@ -19,6 +19,8 @@ export interface LoginData {
   email: string
   password: string
   twoFactorCode?: string
+  ipAddress?: string
+  userAgent?: string
 }
 
 export interface TokenPayload {
@@ -177,6 +179,42 @@ export class AuthService {
       }
     }
 
+    // Check if this is first login ever
+    const isFirstLoginEver = !user.lastLoginAt
+
+    // Check if this is first login today
+    let isFirstLoginToday = false
+    if (user.lastLoginAt) {
+      const lastLogin = new Date(user.lastLoginAt)
+      const today = new Date()
+      
+      isFirstLoginToday = !(
+        lastLogin.getFullYear() === today.getFullYear() &&
+        lastLogin.getMonth() === today.getMonth() &&
+        lastLogin.getDate() === today.getDate()
+      )
+    } else {
+      isFirstLoginToday = true
+    }
+
+    // Update lastLoginAt
+    await db
+      .update(users)
+      .set({ lastLoginAt: new Date() })
+      .where(eq(users.id, user.id))
+
+    // Log access
+    await db.insert(accessLogs).values({
+      id: uuidv7(),
+      userId: user.id,
+      email: user.email,
+      ipAddress: data.ipAddress,
+      userAgent: data.userAgent,
+      loginMethod: 'email',
+      isFirstLoginEver: isFirstLoginEver ? 'true' : 'false',
+      isFirstLoginToday: isFirstLoginToday ? 'true' : 'false',
+    })
+
     const tokens = this.generateTokens({
       userId: user.id,
       email: user.email,
@@ -191,6 +229,8 @@ export class AuthService {
         twoFactorEnabled: user.twoFactorEnabled,
       },
       tokens,
+      isFirstLoginEver,
+      isFirstLoginToday,
     }
   }
 

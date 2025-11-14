@@ -1,6 +1,6 @@
 import { OAuth2Client } from 'google-auth-library'
 import { db } from '../db'
-import { users } from '../db/schema'
+import { users, accessLogs } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { env } from '../env'
 import { authService } from './auth-service'
@@ -116,6 +116,40 @@ export class GoogleAuthService {
         .where(eq(users.id, user.id))
     }
 
+    // Check if this is first login ever
+    const isFirstLoginEver = !user.lastLoginAt
+
+    // Check if this is first login today
+    let isFirstLoginToday = false
+    if (user.lastLoginAt) {
+      const lastLogin = new Date(user.lastLoginAt)
+      const today = new Date()
+      
+      isFirstLoginToday = !(
+        lastLogin.getFullYear() === today.getFullYear() &&
+        lastLogin.getMonth() === today.getMonth() &&
+        lastLogin.getDate() === today.getDate()
+      )
+    } else {
+      isFirstLoginToday = true
+    }
+
+    // Update lastLoginAt
+    await db
+      .update(users)
+      .set({ lastLoginAt: new Date() })
+      .where(eq(users.id, user.id))
+
+    // Log access
+    await db.insert(accessLogs).values({
+      id: uuidv7(),
+      userId: user.id,
+      email: user.email,
+      loginMethod: 'google',
+      isFirstLoginEver: isFirstLoginEver ? 'true' : 'false',
+      isFirstLoginToday: isFirstLoginToday ? 'true' : 'false',
+    })
+
     // Generate JWT tokens
     const authTokens = authService.generateTokens({
       userId: user.id,
@@ -131,6 +165,8 @@ export class GoogleAuthService {
         twoFactorEnabled: user.twoFactorEnabled,
       },
       tokens: authTokens,
+      isFirstLoginEver,
+      isFirstLoginToday,
     }
   }
 }
