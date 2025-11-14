@@ -1,0 +1,281 @@
+{
+  "info": {
+    "name": "Monli Finance API",
+    "description": "API REST para gerenciamento de finanças pessoais com autenticação JWT, 2FA e Google OAuth",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "monli-finance"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SenhaForte123!\",\n  \"name\": \"João Silva\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Registra um novo usuário no sistema. Define cookies HTTP-only automaticamente."
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SenhaForte123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Faz login no sistema. Se 2FA estiver habilitado, retorna requiresTwoFactor: true"
+          },
+          "response": []
+        },
+        {
+          "name": "Login with 2FA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SenhaForte123!\",\n  \"twoFactorCode\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login com código 2FA quando o usuário tem autenticação de dois fatores ativa"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "logout"]
+            },
+            "description": "Faz logout removendo os cookies de autenticação"
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "refresh"]
+            },
+            "description": "Renova o accessToken usando o refreshToken armazenado no cookie"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Retorna informações do usuário autenticado. Requer autenticação."
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints de autenticação e gerenciamento de usuários"
+    },
+    {
+      "name": "Two-Factor Authentication",
+      "item": [
+        {
+          "name": "Setup 2FA",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/2fa/setup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "2fa", "setup"]
+            },
+            "description": "Gera o secret e QR code para configurar 2FA. Requer autenticação. Use o QR code em um app como Google Authenticator."
+          },
+          "response": []
+        },
+        {
+          "name": "Enable 2FA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/2fa/enable",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "2fa", "enable"]
+            },
+            "description": "Habilita 2FA após validar o código do app de autenticação. Requer autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "Disable 2FA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/2fa/disable",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "2fa", "disable"]
+            },
+            "description": "Desabilita 2FA após validar o código. Requer autenticação."
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para autenticação de dois fatores (TOTP)"
+    },
+    {
+      "name": "Google OAuth",
+      "item": [
+        {
+          "name": "Get Google Auth URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/google",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "google"]
+            },
+            "description": "Retorna a URL para iniciar o fluxo de autenticação OAuth com Google"
+          },
+          "response": []
+        },
+        {
+          "name": "Google Callback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/google/callback?code=authorization_code_here",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "google", "callback"],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "authorization_code_here",
+                  "description": "Código de autorização retornado pelo Google"
+                }
+              ]
+            },
+            "description": "Endpoint de callback do Google OAuth. Chamado automaticamente pelo Google após autorização."
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para autenticação via Google OAuth 2.0"
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Verifica se a API está funcionando corretamente"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoint de verificação de saúde da API"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3333",
+      "type": "string"
+    }
+  ]
+}

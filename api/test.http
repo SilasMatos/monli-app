@@ -1,0 +1,108 @@
+### 🔥 Monli Finance API - Requisições HTTP
+### Use com REST Client (VS Code Extension) ou similar
+
+@baseUrl = http://localhost:3333
+@contentType = application/json
+
+### ============================================
+### 🏥 HEALTH CHECK
+### ============================================
+
+### Health Check
+GET {{baseUrl}}/health
+
+### ============================================
+### 👤 REGISTRO E LOGIN
+### ============================================
+
+### Registrar novo usuário
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "teste@example.com",
+  "password": "SenhaForte123!",
+  "name": "Usuário Teste"
+}
+
+### Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "teste@example.com",
+  "password": "SenhaForte123!"
+}
+
+### Login com 2FA (use depois de ativar 2FA)
+# POST {{baseUrl}}/api/auth/login
+# Content-Type: {{contentType}}
+#
+# {
+#   "email": "teste@example.com",
+#   "password": "SenhaForte123!",
+#   "twoFactorCode": "123456"
+# }
+
+### ============================================
+### 🔐 AUTENTICAÇÃO (Requer Login)
+### ============================================
+
+### Obter usuário atual (requer autenticação)
+GET {{baseUrl}}/api/auth/me
+
+### Refresh Token
+POST {{baseUrl}}/api/auth/refresh
+
+### Logout
+POST {{baseUrl}}/api/auth/logout
+
+### ============================================
+### 🔒 AUTENTICAÇÃO DE 2 FATORES
+### ============================================
+
+### Setup 2FA (requer autenticação)
+POST {{baseUrl}}/api/auth/2fa/setup
+
+### Habilitar 2FA (use o código do app de autenticação)
+POST {{baseUrl}}/api/auth/2fa/enable
+Content-Type: {{contentType}}
+
+{
+  "code": "123456"
+}
+
+### Desabilitar 2FA (use o código do app de autenticação)
+POST {{baseUrl}}/api/auth/2fa/disable
+Content-Type: {{contentType}}
+
+{
+  "code": "123456"
+}
+
+### ============================================
+### 🌐 GOOGLE OAUTH
+### ============================================
+
+### Obter URL de autorização do Google
+GET {{baseUrl}}/api/auth/google
+
+### Callback do Google (automático - não chamar manualmente)
+# GET {{baseUrl}}/api/auth/google/callback?code=...
+
+### ============================================
+### 📚 DOCUMENTAÇÃO
+### ============================================
+
+### Abrir documentação interativa
+# @name docs
+# GET {{baseUrl}}/docs
+
+### ============================================
+### 📝 NOTAS
+### ============================================
+
+# - Os cookies são gerenciados automaticamente pelo cliente HTTP
+# - Faça login antes de acessar rotas protegidas
+# - Para testar 2FA: setup -> configure app -> enable -> logout -> login com código
+# - Para Google OAuth, use um navegador (o callback redireciona)
