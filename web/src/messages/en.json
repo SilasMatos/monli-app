@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "customers": "Customers",
+    "orders": "Orders",
+    "reports": "Reports",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout",
+    "welcome": "Welcome"
+  },
+  "navbar": {
+    "welcome": "Welcome",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "notifications": "Notifications",
+    "search": "Search..."
+  },
+  "theme": {
+    "toggleTheme": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "loginWithSocial": "Login with your Apple or Google account",
+    "loginWithGoogle": "Login with Google",
+    "orContinueWith": "Or continue with",
+    "email": "Email",
+    "emailPlaceholder": "john.doe@email.com",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "loggingIn": "Logging in...",
+    "login": "Login",
+    "dontHaveAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "termsAndConditions": "By clicking continue, you agree to our",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+    "createAccount": "Create your account",
+    "signUpWithSocial": "Sign up with your Google account or fill the form below",
+    "fullName": "Full Name",
+    "namePlaceholder": "Your full name",
+    "cpf": "CPF",
+    "cpfPlaceholder": "000.000.000-00",
+    "createAccountButton": "Create account",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
+  "dashboard": {
+    "welcome": "Hello, {name}! 👋",
+    "welcomeSubtitle": "Here's an overview of your finances today.",
+    "export": "Export",
+    "totalBalance": "Total Balance",
+    "income": "Income",
+    "expenses": "Expenses",
+    "investments": "Investments",
+    "comparedToLastMonth": "compared to last month",
+    "thisMonth": "This month",
+    "yield": "yield",
+    "recentTransactions": "Recent Transactions",
+    "recentTransactionsDescription": "Your latest financial movements",
+    "spendingByCategory": "Spending by Category",
+    "spendingByCategoryDescription": "Distribution of your expenses this month",
+    "categories": {
+      "food": "Food",
+      "transport": "Transport",
+      "entertainment": "Entertainment",
+      "utilities": "Utilities",
+      "work": "Work",
+      "savings": "Savings"
+    },
+    "transactionTypes": {
+      "salary": "Salary",
+      "supermarket": "Supermarket",
+      "freelance": "Freelance",
+      "electricBill": "Electric Bill",
+      "investment": "Investment"
+    }
+  },
+  "user": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout",
+    "logoutConfirm": "Confirm logout",
+    "logoutDescription": "Are you sure you want to logout? You will be redirected to the login page.",
+    "loggingOut": "Logging out...",
+    "cancel": "Cancel"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "products": "Produtos",
+    "customers": "Clientes",
+    "orders": "Pedidos",
+    "reports": "Relatórios",
+    "settings": "Configurações",
+    "profile": "Perfil",
+    "logout": "Sair",
+    "welcome": "Bem-vindo"
+  },
+  "navbar": {
+    "welcome": "Bem-vindo",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "logout": "Sair",
+    "notifications": "Notificações",
+    "search": "Pesquisar..."
+  },
+  "theme": {
+    "toggleTheme": "Alternar tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  },
+  "user": {
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "logout": "Sair",
+    "logoutConfirm": "Confirmar logout",
+    "logoutDescription": "Tem certeza que deseja sair da sua conta? Você será redirecionado para a página de login.",
+    "loggingOut": "Saindo...",
+    "cancel": "Cancelar"
+  },
+  "auth": {
+    "welcomeBack": "Bem-vindo de volta",
+    "loginWithSocial": "Faça login com sua conta Apple ou Google",
+    "loginWithGoogle": "Entrar com Google",
+    "orContinueWith": "Ou continue com",
+    "email": "Email",
+    "emailPlaceholder": "joao.silva@email.com",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu sua senha?",
+    "loggingIn": "Entrando...",
+    "login": "Entrar",
+    "dontHaveAccount": "Não tem uma conta?",
+    "signUp": "Cadastre-se",
+    "termsAndConditions": "Ao continuar, você concorda com nossos",
+    "termsOfService": "Termos de Serviço",
+    "and": "e",
+    "privacyPolicy": "Política de Privacidade",
+    "createAccount": "Crie sua conta",
+    "signUpWithSocial": "Cadastre-se com sua conta Google ou preencha o formulário abaixo",
+    "fullName": "Nome Completo",
+    "namePlaceholder": "Seu nome completo",
+    "cpf": "CPF",
+    "cpfPlaceholder": "000.000.000-00",
+    "createAccountButton": "Criar conta",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "signIn": "Entrar"
+  },
+  "dashboard": {
+    "welcome": "Olá, {name}! 👋",
+    "welcomeSubtitle": "Aqui está um resumo das suas finanças hoje.",
+    "export": "Exportar",
+    "totalBalance": "Saldo Total",
+    "income": "Receitas",
+    "expenses": "Despesas",
+    "investments": "Investimentos",
+    "comparedToLastMonth": "em relação ao mês passado",
+    "thisMonth": "Este mês",
+    "yield": "rendimento",
+    "recentTransactions": "Transações Recentes",
+    "recentTransactionsDescription": "Suas últimas movimentações financeiras",
+    "spendingByCategory": "Gastos por Categoria",
+    "spendingByCategoryDescription": "Distribuição dos seus gastos este mês",
+    "categories": {
+      "food": "Alimentação",
+      "transport": "Transporte",
+      "entertainment": "Entretenimento",
+      "utilities": "Utilidades",
+      "work": "Trabalho",
+      "savings": "Poupança"
+    },
+    "transactionTypes": {
+      "salary": "Salário",
+      "supermarket": "Supermercado",
+      "freelance": "Freelance",
+      "electricBill": "Conta de Luz",
+      "investment": "Investimento"
+    }
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "view": "Visualizar"
+  }
+}
