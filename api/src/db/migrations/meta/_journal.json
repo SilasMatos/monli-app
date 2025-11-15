@@ -57,6 +57,13 @@
       "when": 1763142503084,
       "tag": "0007_silky_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1763229075435,
+      "tag": "0008_quiet_lester",
+      "breakpoints": true
     }
   ]
 }

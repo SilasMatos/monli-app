@@ -251,67 +251,24 @@
       "description": "Endpoint de verificação de saúde da API"
     },
     {
-      "name": "Accounts",
+      "name": "Wallet",
       "item": [
         {
-          "name": "Create Account",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Conta Corrente\",\n  \"type\": \"checking\",\n  \"initialBalance\": 1000.00,\n  \"currency\": \"BRL\",\n  \"color\": \"#4CAF50\",\n  \"icon\": \"bank\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/accounts",
-              "host": ["{{baseUrl}}"],
-              "path": ["accounts"]
-            },
-            "description": "Cria uma nova conta com saldo inicial. Tipos: checking, savings, investment, cash. Requer autenticação."
-          },
-          "response": []
-        },
-        {
-          "name": "Get All Accounts",
+          "name": "Get Wallet",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/accounts",
+              "raw": "{{baseUrl}}/wallet",
               "host": ["{{baseUrl}}"],
-              "path": ["accounts"]
+              "path": ["wallet"]
             },
-            "description": "Lista todas as contas do usuário autenticado. Requer autenticação."
+            "description": "Retorna informações da carteira do usuário autenticado. Requer autenticação."
           },
           "response": []
         },
         {
-          "name": "Get Account by ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/accounts/:id",
-              "host": ["{{baseUrl}}"],
-              "path": ["accounts", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "account-uuid-here"
-                }
-              ]
-            },
-            "description": "Retorna detalhes de uma conta específica. Requer autenticação."
-          },
-          "response": []
-        },
-        {
-          "name": "Update Account",
+          "name": "Update Wallet",
           "request": {
             "method": "PUT",
             "header": [
@@ -322,112 +279,85 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Conta Corrente Principal\",\n  \"color\": \"#2196F3\",\n  \"icon\": \"account_balance\"\n}"
+              "raw": "{\n  \"currency\": \"BRL\",\n  \"name\": \"Minha Carteira\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/accounts/:id",
+              "raw": "{{baseUrl}}/wallet",
               "host": ["{{baseUrl}}"],
-              "path": ["accounts", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "account-uuid-here"
-                }
-              ]
+              "path": ["wallet"]
             },
-            "description": "Atualiza informações de uma conta. Requer autenticação."
+            "description": "Atualiza informações da carteira. Requer autenticação."
           },
           "response": []
         },
         {
-          "name": "Delete Account",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/accounts/:id",
-              "host": ["{{baseUrl}}"],
-              "path": ["accounts", ":id"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "account-uuid-here"
-                }
-              ]
-            },
-            "description": "Desativa uma conta (soft delete). Requer autenticação."
-          },
-          "response": []
-        },
-        {
-          "name": "Get Account Balance",
+          "name": "Get Balance",
           "request": {
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/accounts/:id/balance",
+              "raw": "{{baseUrl}}/wallet/balance",
               "host": ["{{baseUrl}}"],
-              "path": ["accounts", ":id", "balance"],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "account-uuid-here"
-                }
-              ]
+              "path": ["wallet", "balance"]
             },
-            "description": "Retorna o saldo atual de uma conta. Requer autenticação."
+            "description": "Retorna o saldo atual da carteira (balance e saved). Requer autenticação."
           },
           "response": []
         },
         {
-          "name": "Get Total Balance",
+          "name": "Transfer to Saved",
           "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/accounts/balance/total",
-              "host": ["{{baseUrl}}"],
-              "path": ["accounts", "balance", "total"]
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 500.00\n}"
             },
-            "description": "Retorna o saldo total de todas as contas ativas. Requer autenticação."
+            "url": {
+              "raw": "{{baseUrl}}/wallet/transfer-to-saved",
+              "host": ["{{baseUrl}}"],
+              "path": ["wallet", "transfer-to-saved"]
+            },
+            "description": "Transfere dinheiro do saldo disponível para o saldo guardado. Requer autenticação."
           },
           "response": []
         },
         {
-          "name": "Get Account Transactions",
+          "name": "Transfer from Saved",
           "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/accounts/:id/transactions?limit=50",
-              "host": ["{{baseUrl}}"],
-              "path": ["accounts", ":id", "transactions"],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "50",
-                  "description": "Número máximo de transações a retornar (padrão: 50)"
-                }
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "account-uuid-here"
-                }
-              ]
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 500.00\n}"
             },
-            "description": "Retorna o extrato de transações de uma conta específica. Requer autenticação."
+            "url": {
+              "raw": "{{baseUrl}}/wallet/transfer-from-saved",
+              "host": ["{{baseUrl}}"],
+              "path": ["wallet", "transfer-from-saved"]
+            },
+            "description": "Transfere dinheiro do saldo guardado para o saldo disponível. Requer autenticação."
           },
           "response": []
         }
       ],
-      "description": "Endpoints para gerenciamento de contas bancárias"
+      "description": "Endpoints para gerenciamento da carteira do usuário"
     },
     {
       "name": "Transactions",
       "item": [
         {
-          "name": "Create Income Transaction",
+          "name": "Create Transaction",
           "request": {
             "method": "POST",
             "header": [
@@ -438,60 +368,14 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"accountId\": \"account-uuid-here\",\n  \"type\": \"income\",\n  \"category\": \"Salário\",\n  \"amount\": 5000.00,\n  \"description\": \"Salário mensal\",\n  \"date\": \"2025-11-14T10:00:00Z\",\n  \"tags\": [\"recorrente\", \"trabalho\"]\n}"
+              "raw": "{\n  \"type\": \"income\",\n  \"category\": \"Salário\",\n  \"amount\": 5000.00,\n  \"description\": \"Salário mensal\",\n  \"date\": \"2025-11-15T10:00:00Z\",\n  \"tags\": [\"recorrente\", \"trabalho\"]\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/transactions",
               "host": ["{{baseUrl}}"],
               "path": ["transactions"]
             },
-            "description": "Cria uma transação de receita. O saldo da conta é atualizado automaticamente. Requer autenticação."
-          },
-          "response": []
-        },
-        {
-          "name": "Create Expense Transaction",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"accountId\": \"account-uuid-here\",\n  \"type\": \"expense\",\n  \"category\": \"Alimentação\",\n  \"amount\": 150.00,\n  \"description\": \"Compras no supermercado\",\n  \"date\": \"2025-11-14T15:30:00Z\",\n  \"tags\": [\"supermercado\", \"necessário\"]\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/transactions",
-              "host": ["{{baseUrl}}"],
-              "path": ["transactions"]
-            },
-            "description": "Cria uma transação de despesa. O saldo da conta é atualizado automaticamente. Requer autenticação."
-          },
-          "response": []
-        },
-        {
-          "name": "Create Transfer Transaction",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"accountId\": \"source-account-uuid\",\n  \"type\": \"transfer\",\n  \"category\": \"Transferência\",\n  \"amount\": 500.00,\n  \"description\": \"Transferência entre contas\",\n  \"date\": \"2025-11-14T12:00:00Z\",\n  \"relatedAccountId\": \"target-account-uuid\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/transactions",
-              "host": ["{{baseUrl}}"],
-              "path": ["transactions"]
-            },
-            "description": "Cria uma transferência entre contas. Cria automaticamente duas transações (saída e entrada). Requer autenticação."
+            "description": "Cria uma nova transação (income ou expense). O saldo da carteira é atualizado automaticamente. Requer autenticação."
           },
           "response": []
         },
@@ -517,7 +401,7 @@
           "response": []
         }
       ],
-      "description": "Endpoints para gerenciamento de transações financeiras (extrato)"
+      "description": "Endpoints para gerenciamento de transações financeiras"
     },
     {
       "name": "User Profile",
@@ -635,6 +519,337 @@
         }
       ],
       "description": "Endpoints para gerenciamento de perfil do usuário, preferências e assinatura"
+    },
+    {
+      "name": "Credit Cards",
+      "item": [
+        {
+          "name": "Create Credit Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nubank\",\n  \"lastFourDigits\": \"1234\",\n  \"brand\": \"Mastercard\",\n  \"creditLimit\": \"5000.00\",\n  \"closingDay\": 10,\n  \"dueDay\": 17,\n  \"color\": \"#8A05BE\",\n  \"icon\": \"credit_card\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards"]
+            },
+            "description": "Cria um novo cartão de crédito. Requer autenticação. Status: 201 CREATED"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Credit Cards",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards"]
+            },
+            "description": "Lista todos os cartões de crédito ativos do usuário. Requer autenticação. Status: 200 OK"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Credit Card by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "card-uuid-here"
+                }
+              ]
+            },
+            "description": "Retorna detalhes de um cartão específico. Requer autenticação. Status: 200 OK ou 404 NOT FOUND"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Credit Card",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nubank Platinum\",\n  \"creditLimit\": \"10000.00\",\n  \"color\": \"#8A05BE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "card-uuid-here"
+                }
+              ]
+            },
+            "description": "Atualiza informações de um cartão. Requer autenticação. Status: 200 OK ou 404 NOT FOUND"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Credit Card",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "card-uuid-here"
+                }
+              ]
+            },
+            "description": "Desativa um cartão (soft delete). Requer autenticação. Status: 204 NO CONTENT ou 404 NOT FOUND"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Available Credit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards/:id/available-credit",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards", ":id", "available-credit"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "card-uuid-here"
+                }
+              ]
+            },
+            "description": "Retorna informações de crédito disponível e utilização. Requer autenticação. Status: 200 OK"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Expense to Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"150.00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/credit-cards/:id/expense",
+              "host": ["{{baseUrl}}"],
+              "path": ["credit-cards", ":id", "expense"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "card-uuid-here"
+                }
+              ]
+            },
+            "description": "Adiciona uma despesa ao cartão de crédito. Requer autenticação. Status: 200 OK ou 400 BAD REQUEST"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para gerenciamento de cartões de crédito"
+    },
+    {
+      "name": "Budgets",
+      "item": [
+        {
+          "name": "Create Budget",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alimentação Novembro\",\n  \"description\": \"Orçamento para gastos com alimentação\",\n  \"amount\": \"1000.00\",\n  \"tags\": [\"alimentação\", \"restaurante\", \"supermercado\"],\n  \"startDate\": \"2025-11-01T00:00:00Z\",\n  \"endDate\": \"2025-11-30T23:59:59Z\",\n  \"alertPercentage\": \"80.00\",\n  \"alertEnabled\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/budgets",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets"]
+            },
+            "description": "Cria um novo orçamento com filtro por tags ou categoria. Requer autenticação. Status: 201 CREATED"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Budget by Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Transporte Dezembro\",\n  \"description\": \"Orçamento para gastos com transporte\",\n  \"amount\": \"500.00\",\n  \"category\": \"Transporte\",\n  \"startDate\": \"2025-12-01T00:00:00Z\",\n  \"endDate\": \"2025-12-31T23:59:59Z\",\n  \"alertPercentage\": \"90.00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/budgets",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets"]
+            },
+            "description": "Cria orçamento filtrado por categoria específica. Requer autenticação. Status: 201 CREATED"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Budgets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/budgets?includeInactive=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets"],
+              "query": [
+                {
+                  "key": "includeInactive",
+                  "value": "false",
+                  "description": "Incluir orçamentos inativos"
+                }
+              ]
+            },
+            "description": "Lista todos os orçamentos do usuário com cálculo de gastos. Requer autenticação. Status: 200 OK"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Budgets",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/budgets/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets", "active"]
+            },
+            "description": "Lista orçamentos ativos no período atual. Requer autenticação. Status: 200 OK"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Budget Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/budgets/summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets", "summary"]
+            },
+            "description": "Retorna resumo de todos os orçamentos ativos com totalizadores. Requer autenticação. Status: 200 OK"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Budget by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/budgets/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "budget-uuid-here"
+                }
+              ]
+            },
+            "description": "Retorna detalhes de um orçamento específico com gastos calculados. Requer autenticação. Status: 200 OK ou 404 NOT FOUND"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Budget",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"1200.00\",\n  \"alertPercentage\": \"85.00\",\n  \"tags\": [\"alimentação\", \"restaurante\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/budgets/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "budget-uuid-here"
+                }
+              ]
+            },
+            "description": "Atualiza informações de um orçamento. Requer autenticação. Status: 200 OK ou 404 NOT FOUND"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Budget",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/budgets/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["budgets", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "budget-uuid-here"
+                }
+              ]
+            },
+            "description": "Desativa um orçamento (soft delete). Requer autenticação. Status: 204 NO CONTENT ou 404 NOT FOUND"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para gerenciamento de orçamentos mensais com rastreamento por tags"
     }
   ],
   "event": [
