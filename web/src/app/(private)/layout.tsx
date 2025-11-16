@@ -1,6 +1,7 @@
-import { Navbar } from '@/components/app-navbar'
-import WelcomeScreen from '@/features/welcome/page'
 import Sidebar from '@/components/sidebar-app'
+import AppHeader from '@/components/app-header'
+import { ThemeProvider } from '@/contexts/theme-context'
+import { SidebarProvider } from '@/contexts/sidebar-context'
 
 export default function PrivateLayout({
   children
@@ -8,21 +9,16 @@ export default function PrivateLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <div className="flex h-screen bg-background">
-        <Sidebar />
-        <main className="flex-1 flex flex-col overflow-hidden">{children}</main>
-      </div>
-    </>
-
-    // <div className="min-h-screen bg-background">
-    //   <>
-    //     <Navbar />
-    //     <main className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-    //       {children}
-    //     </main>
-    //     <WelcomeScreen />
-    //   </>
-    // </div>
+    <ThemeProvider>
+      <SidebarProvider>
+        <div className="flex h-screen text-white">
+          <Sidebar />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <AppHeader />
+            <main className="flex-1 overflow-auto">{children}</main>
+          </div>
+        </div>
+      </SidebarProvider>
+    </ThemeProvider>
   )
 }
