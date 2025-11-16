@@ -182,13 +182,16 @@ export default function AppHeader() {
             <Input placeholder="Buscar..." className="pl-8 w-64" />
           </div>
 
-          <Button variant="ghost" size="icon" className="size-9">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="w-9 h-9 rounded-lg hover:bg-sidebar-accent transition-colors flex items-center justify-center text-muted-foreground hover:text-foreground"
+          >
             <HugeiconsIcon
               icon={Notification02Icon}
               size={20}
               color="currentColor"
-              strokeWidth={1.5}
-              className="text-foreground"
+              strokeWidth={2}
             />
           </Button>
 
@@ -201,9 +204,9 @@ export default function AppHeader() {
           >
             <HugeiconsIcon
               icon={theme === 'dark' ? Sun03Icon : Moon02Icon}
-              size={20}
+              size={18}
               color="currentColor"
-              strokeWidth={1.5}
+              strokeWidth={2}
             />
           </button>
 
