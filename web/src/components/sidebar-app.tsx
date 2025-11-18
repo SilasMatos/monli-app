@@ -1,140 +1,202 @@
 'use client'
 
-import { HugeiconsIcon } from '@hugeicons/react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
-  ZapIcon,
-  AddCircleIcon,
-  GridIcon,
-  SparklesIcon,
-  Mail01Icon,
-  BarChartIcon,
-  BookOpen01Icon,
-  Settings02Icon
-} from '@hugeicons/core-free-icons'
+  LayoutDashboard,
+  Plus,
+  CreditCard,
+  Receipt,
+  Target,
+  User,
+  Settings,
+  PlayCircle
+} from 'lucide-react'
 import { useSidebar } from '@/contexts/sidebar-context'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
+
+const navigationItems = [
+  {
+    href: '/',
+    icon: LayoutDashboard,
+    label: 'Dashboard'
+  },
+  {
+    href: '/transactions',
+    icon: Receipt,
+    label: 'Transactions'
+  },
+  {
+    href: '/subscriptions',
+    icon: PlayCircle,
+    label: 'Subscriptions'
+  },
+  {
+    href: '/budgets',
+    icon: Target,
+    label: 'Budgets'
+  },
+  {
+    href: '/credit-cards',
+    icon: CreditCard,
+    label: 'Credit Cards'
+  },
+  {
+    href: '/profile',
+    icon: User,
+    label: 'Profile'
+  }
+]
 
 export default function Sidebar() {
   const { isExpanded } = useSidebar()
+  const pathname = usePathname()
 
   return (
-    <aside
-      className={`${
-        isExpanded ? 'w-64' : 'w-16'
-      } bg-sidebar border-r border-sidebar-border flex flex-col py-6 gap-6 transition-all duration-300`}
-    >
-      <div className={`flex flex-col ${isExpanded ? 'px-4' : 'items-center'}`}>
-        {/* Logo */}
+    <TooltipProvider>
+      <aside
+        className={`${
+          isExpanded ? 'w-64' : 'w-16'
+        } bg-sidebar border-r border-sidebar-border flex flex-col py-6 gap-6 transition-all duration-300`}
+      >
         <div
-          className={`flex items-center gap-3 ${
-            isExpanded ? '' : 'justify-center'
-          }`}
+          className={`flex flex-col ${isExpanded ? 'px-4' : 'items-center'}`}
         >
+          {/* Logo */}
           <div
-            className="flex justify-center items-center
-       "
+            className={`flex items-center gap-3 ${
+              isExpanded ? '' : 'justify-center'
+            }`}
           >
-            <h1 className="font-medium italic text-sidebar-foreground">M</h1>
+            <div
+              className="flex justify-center items-center
+       "
+            >
+              <h1 className="font-medium italic text-sidebar-foreground">M</h1>
+            </div>
+            {isExpanded && (
+              <span className="text-sidebar-foreground font-semibold text-lg whitespace-nowrap">
+                Monli App
+              </span>
+            )}
           </div>
-          {isExpanded && (
-            <span className="text-sidebar-foreground font-semibold text-lg whitespace-nowrap">
-              Monli App
-            </span>
+
+          {/* Add Button */}
+          {isExpanded ? (
+            <button className="mt-6 h-10 w-full rounded-lg bg-sidebar-accent hover:bg-sidebar-primary hover:text-sidebar-primary-foreground text-sidebar-foreground transition-colors flex items-center justify-start px-4 gap-3">
+              <Plus size={20} />
+              <span className="text-sm font-medium">Create New</span>
+            </button>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="mt-6 h-10 w-10 rounded-lg bg-sidebar-accent hover:bg-sidebar-primary hover:text-sidebar-primary-foreground text-sidebar-foreground transition-colors flex items-center justify-center">
+                  <Plus size={20} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Create New</p>
+              </TooltipContent>
+            </Tooltip>
           )}
         </div>
 
-        {/* Add Button */}
-        <button
-          className={`mt-6 h-10 rounded-lg bg-sidebar-accent hover:bg-sidebar-primary hover:text-sidebar-primary-foreground text-sidebar-foreground transition-colors flex items-center justify-center ${
-            isExpanded ? 'w-full px-4 gap-3 justify-start' : 'w-10'
+        {/* Navigation Icons */}
+        <nav
+          className={`flex flex-col gap-2 flex-1 ${
+            isExpanded ? 'px-4' : 'items-center'
           }`}
         >
-          <HugeiconsIcon
-            icon={AddCircleIcon}
-            size={20}
-            color="currentColor"
-            strokeWidth={1.5}
-          />
-          {isExpanded && (
-            <span className="text-sm font-medium">Create New</span>
+          {navigationItems.map(item => (
+            <NavIcon
+              key={item.href}
+              href={item.href}
+              icon={item.icon}
+              label={item.label}
+              active={
+                pathname === item.href ||
+                (pathname === '/' && item.href === '/')
+              }
+              isExpanded={isExpanded}
+            />
+          ))}
+        </nav>
+
+        <div className={isExpanded ? 'px-4' : 'flex justify-center'}>
+          {isExpanded ? (
+            <Link
+              href="/settings"
+              className="h-10 w-full rounded-lg hover:bg-sidebar-accent transition-colors flex items-center text-muted-foreground hover:text-sidebar-foreground px-4 gap-3 justify-start"
+            >
+              <Settings size={20} />
+              <span className="text-sm">Settings</span>
+            </Link>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/settings"
+                  className="h-10 w-10 rounded-lg hover:bg-sidebar-accent transition-colors flex items-center justify-center text-muted-foreground hover:text-sidebar-foreground"
+                >
+                  <Settings size={20} />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>Settings</p>
+              </TooltipContent>
+            </Tooltip>
           )}
-        </button>
-      </div>
-
-      {/* Navigation Icons */}
-      <nav
-        className={`flex flex-col gap-2 flex-1 ${
-          isExpanded ? 'px-4' : 'items-center'
-        }`}
-      >
-        <NavIcon
-          icon={ZapIcon}
-          label="Automations"
-          active
-          isExpanded={isExpanded}
-        />
-        <NavIcon icon={GridIcon} label="Dashboard" isExpanded={isExpanded} />
-        <NavIcon icon={Mail01Icon} label="Messages" isExpanded={isExpanded} />
-        <NavIcon
-          icon={BarChartIcon}
-          label="Analytics"
-          isExpanded={isExpanded}
-        />
-        <NavIcon
-          icon={BookOpen01Icon}
-          label="Documentation"
-          isExpanded={isExpanded}
-        />
-      </nav>
-
-      <div className={isExpanded ? 'px-4' : 'flex justify-center'}>
-        <button
-          className={`h-10 rounded-lg hover:bg-sidebar-accent transition-colors flex items-center text-muted-foreground hover:text-sidebar-foreground ${
-            isExpanded
-              ? 'w-full px-4 gap-3 justify-start'
-              : 'w-10 justify-center'
-          }`}
-        >
-          <HugeiconsIcon
-            icon={Settings02Icon}
-            size={20}
-            color="currentColor"
-            strokeWidth={1.5}
-          />
-          {isExpanded && <span className="text-sm">Settings</span>}
-        </button>
-      </div>
-    </aside>
+        </div>
+      </aside>
+    </TooltipProvider>
   )
 }
 
 function NavIcon({
-  icon,
+  href,
+  icon: Icon,
   label,
   active = false,
   isExpanded
 }: {
+  href: string
   icon: any
   label: string
   active?: boolean
   isExpanded: boolean
 }) {
+  const linkClassName = `h-10 rounded-lg transition-colors flex items-center ${
+    isExpanded ? 'w-full px-4 gap-3 justify-start' : 'w-10 justify-center'
+  } ${
+    active
+      ? 'bg-sidebar-primary text-sidebar-primary-foreground'
+      : 'text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground'
+  }`
+
+  if (isExpanded) {
+    return (
+      <Link href={href} className={linkClassName}>
+        <Icon size={20} />
+        <span className="text-sm">{label}</span>
+      </Link>
+    )
+  }
+
   return (
-    <button
-      className={`h-10 rounded-lg transition-colors flex items-center ${
-        isExpanded ? 'w-full px-4 gap-3 justify-start' : 'w-10 justify-center'
-      } ${
-        active
-          ? 'bg-sidebar-primary text-sidebar-primary-foreground'
-          : 'text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground'
-      }`}
-    >
-      <HugeiconsIcon
-        icon={icon}
-        size={20}
-        color="currentColor"
-        strokeWidth={1.5}
-      />
-      {isExpanded && <span className="text-sm">{label}</span>}
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Link href={href} className={linkClassName}>
+          <Icon size={20} />
+        </Link>
+      </TooltipTrigger>
+      <TooltipContent side="right">
+        <p>{label}</p>
+      </TooltipContent>
+    </Tooltip>
   )
 }

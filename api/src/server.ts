@@ -14,6 +14,7 @@ import { accountRoutes } from './routes/account-routes'
 import { profileRoutes } from './routes/profile-routes'
 import { creditCardRoutes } from './routes/credit-card-routes'
 import { budgetRoutes } from './routes/budget-routes'
+import { subscriptionRoutes } from './routes/subscription-routes'
 import { env } from './env'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -71,6 +72,7 @@ app.register(accountRoutes)
 app.register(profileRoutes)
 app.register(creditCardRoutes)
 app.register(budgetRoutes)
+app.register(subscriptionRoutes)
 
 app.listen({ port: env.PORT, host: '0.0.0.0' }).then(() => {
 	console.log('🚀 HTTP server running on http://localhost:3333')

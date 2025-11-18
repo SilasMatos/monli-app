@@ -64,6 +64,20 @@
       "when": 1763229075435,
       "tag": "0008_quiet_lester",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1763329178321,
+      "tag": "0009_spooky_apocalypse",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1763329349492,
+      "tag": "0010_dry_exiles",
+      "breakpoints": true
     }
   ]
 }

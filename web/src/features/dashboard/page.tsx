@@ -512,155 +512,181 @@ export function DashboardPage() {
         </div>
 
         {/* Subscriptions & Budgets Section */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          {/* Active Subscriptions */}
-          <motion.div variants={item}>
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <PlayCircle className="h-5 w-5 text-purple-500" />
-                      Active Subscriptions
-                    </CardTitle>
-                    <CardDescription>
-                      $
-                      {subscriptions
-                        .reduce(
-                          (sum, sub) =>
-                            sub.status === 'active' ? sum + sub.amount : sum,
-                          0
-                        )
-                        .toFixed(2)}{' '}
-                      monthly
-                    </CardDescription>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    View All
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {subscriptions.map((sub, index) => (
-                    <motion.div
-                      key={sub.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-center justify-between rounded-lg border p-3"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`flex h-10 w-10 items-center justify-center rounded-lg ${sub.color} text-white text-xl`}
-                        >
-                          {sub.icon}
-                        </div>
-                        <div>
-                          <div className="font-medium">{sub.name}</div>
-                          <div className="text-xs text-muted-foreground">
-                            Next:{' '}
-                            {new Date(sub.nextBilling).toLocaleDateString()}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="font-semibold">${sub.amount}</div>
-                        <div
-                          className={`text-xs ${
-                            sub.status === 'active'
-                              ? 'text-emerald-500'
-                              : 'text-orange-500'
-                          }`}
-                        >
-                          {sub.status === 'active' ? (
-                            <span className="flex items-center gap-1">
-                              <PlayCircle className="h-3 w-3" />
-                              Active
-                            </span>
-                          ) : (
-                            <span className="flex items-center gap-1">
-                              <PauseCircle className="h-3 w-3" />
-                              Paused
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Budget Overview */}
-          <motion.div variants={item}>
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Target className="h-5 w-5 text-blue-500" />
-                      Budget Overview
-                    </CardTitle>
-                    <CardDescription>Monthly spending limits</CardDescription>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    Manage
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {budgets.map((budget, index) => {
-                    const percentage = (budget.spent / budget.total) * 100
-                    const isOverAlert = percentage >= budget.alertAt
-
-                    return (
-                      <motion.div
-                        key={budget.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="space-y-2"
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium">{budget.name}</span>
-                            {isOverAlert && (
-                              <AlertCircle className="h-4 w-4 text-orange-500" />
-                            )}
-                          </div>
-                          <span className="text-sm text-muted-foreground">
-                            ${budget.spent} / ${budget.total}
-                          </span>
-                        </div>
-                        <div className="relative">
-                          <Progress
-                            value={percentage}
-                            className={`h-2 ${
-                              isOverAlert ? '[&>div]:bg-orange-500' : ''
-                            }`}
-                          />
-                          <div
-                            className="absolute top-0 h-2 w-0.5 bg-red-500"
-                            style={{ left: `${budget.alertAt}%` }}
-                          />
-                        </div>
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>{percentage.toFixed(1)}% used</span>
-                          <span>
-                            ${(budget.total - budget.spent).toFixed(2)} left
-                          </span>
-                        </div>
-                      </motion.div>
-                    )
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+      <div className="grid gap-6 lg:grid-cols-2">
+  {/* Active Subscriptions */}
+  <motion.div variants={item}>
+    <Card className="shadow-md hover:shadow-lg transition-shadow duration-300 border-0 bg-gradient-to-br from-white to-gray-50">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <div className="p-1.5 rounded-lg bg-purple-100 text-purple-600">
+                <PlayCircle className="h-5 w-5" />
+              </div>
+              Active Subscriptions
+            </CardTitle>
+            <CardDescription className="mt-1 flex items-center gap-1">
+              <span className="text-xl font-semibold text-gray-800">
+                ${subscriptions
+                  .reduce(
+                    (sum, sub) =>
+                      sub.status === 'active' ? sum + sub.amount : sum,
+                    0
+                  )
+                  .toFixed(2)}
+              </span>
+              <span className="text-gray-500">monthly</span>
+            </CardDescription>
+          </div>
+          <Button variant="outline" size="sm" className="rounded-full hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200 transition-colors">
+            View All
+          </Button>
         </div>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <div className="grid gap-3 sm:grid-cols-2">
+          {subscriptions.map((sub, index) => (
+            <motion.div
+              key={sub.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -2, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
+              className={`flex items-center justify-between rounded-xl border p-3 bg-white cursor-pointer transition-all ${
+                sub.status === 'active' ? 'border-gray-200' : 'border-gray-100 opacity-75'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg ${sub.color} text-white text-xl shadow-sm`}
+                >
+                  {sub.icon}
+                </div>
+                <div className="min-w-0">
+                  <div className="font-medium text-gray-800 truncate">{sub.name}</div>
+                  <div className="text-xs text-gray-500 flex items-center gap-1">
+                    <Calendar className="h-3 w-3" />
+                    {new Date(sub.nextBilling).toLocaleDateString('en-US', { 
+                      month: 'short', 
+                      day: 'numeric' 
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="font-semibold text-gray-800">${sub.amount}</div>
+                <div
+                  className={`text-xs flex items-center gap-1 justify-end ${
+                    sub.status === 'active'
+                      ? 'text-emerald-600'
+                      : 'text-orange-500'
+                  }`}
+                >
+                  {sub.status === 'active' ? (
+                    <>
+                      <PlayCircle className="h-3 w-3" />
+                      Active
+                    </>
+                  ) : (
+                    <>
+                      <PauseCircle className="h-3 w-3" />
+                      Paused
+                    </>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  </motion.div>
+
+  {/* Budget Overview */}
+  <motion.div variants={item}>
+    <Card className="shadow-md hover:shadow-lg transition-shadow duration-300 border-0 bg-gradient-to-br from-white to-gray-50">
+      <CardHeader className="pb-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <div className="p-1.5 rounded-lg bg-blue-100 text-blue-600">
+                <Target className="h-5 w-5" />
+              </div>
+              Budget Overview
+            </CardTitle>
+            <CardDescription className="mt-1">Monthly spending limits</CardDescription>
+          </div>
+          <Button variant="outline" size="sm" className="rounded-full hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors">
+            Manage
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="pt-0">
+        <div className="space-y-4">
+          {budgets.map((budget, index) => {
+            const percentage = (budget.spent / budget.total) * 100
+            const isOverAlert = percentage >= budget.alertAt
+            const isOverBudget = percentage >= 100
+
+            return (
+              <motion.div
+                key={budget.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="space-y-2 p-3 rounded-lg bg-white border border-gray-100"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-gray-800">{budget.name}</span>
+                    {isOverBudget ? (
+                      <AlertCircle className="h-4 w-4 text-red-500" />
+                    ) : isOverAlert ? (
+                      <AlertCircle className="h-4 w-4 text-orange-500" />
+                    ) : null}
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">
+                    ${budget.spent} <span className="text-gray-500">/ ${budget.total}</span>
+                  </span>
+                </div>
+                <div className="relative">
+                  <Progress
+                    value={percentage}
+                    className={`h-2.5 rounded-full ${
+                      isOverBudget 
+                        ? '[&>div]:bg-red-500' 
+                        : isOverAlert 
+                        ? '[&>div]:bg-orange-500' 
+                        : ''
+                    }`}
+                  />
+                  <div
+                    className="absolute top-0 h-2.5 w-0.5 bg-red-400 rounded-full"
+                    style={{ left: `${budget.alertAt}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className={`font-medium ${
+                    isOverBudget 
+                      ? 'text-red-600' 
+                      : isOverAlert 
+                      ? 'text-orange-600' 
+                      : 'text-gray-600'
+                  }`}>
+                    {percentage.toFixed(1)}% used
+                  </span>
+                  <span className="text-gray-600">
+                    ${(budget.total - budget.spent).toFixed(2)} left
+                  </span>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  </motion.div>
+</div>
 
         {/* Upcoming Bills & Recent Transactions */}
         <div className="grid gap-6 lg:grid-cols-2">
