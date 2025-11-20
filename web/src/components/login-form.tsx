@@ -33,7 +33,7 @@ export function LoginForm({
   const loginMutation = useLogin({
     onSuccess: data => {
       toast.success('Login realizado com sucesso!')
-
+      console.log('Login successful:', data)
       setIsFirstAccess(data?.user?.isFirstAccess)
       router.push('/')
     },

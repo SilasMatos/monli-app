@@ -37,6 +37,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import { Home } from 'lucide-react'
 
 function UserMenu() {
   const router = useRouter()
@@ -161,12 +162,13 @@ export default function AppHeader() {
             />
           </button>
           <div className="flex items-center gap-3">
-            <h1 className="text-lg font-semibold text-foreground">
-              Automations
-            </h1>
-            <span className="px-2.5 py-1 text-xs font-medium bg-sidebar-accent text-sidebar-primary rounded-md border border-sidebar-border">
-              Draft
-            </span>
+            <div className="flex items-center gap-3">
+              <Home size={18} />
+
+              <h1 className="text-sm font-semibold text-foreground">
+                Dashboard
+              </h1>
+            </div>
           </div>
         </div>
 

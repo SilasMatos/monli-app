@@ -85,25 +85,6 @@ export default function Sidebar() {
               </span>
             )}
           </div>
-
-          {/* Add Button */}
-          {isExpanded ? (
-            <button className="mt-6 h-10 w-full rounded-lg bg-sidebar-accent hover:bg-sidebar-primary hover:text-sidebar-primary-foreground text-sidebar-foreground transition-colors flex items-center justify-start px-4 gap-3">
-              <Plus size={20} />
-              <span className="text-sm font-medium">Create New</span>
-            </button>
-          ) : (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button className="mt-6 h-10 w-10 rounded-lg bg-sidebar-accent hover:bg-sidebar-primary hover:text-sidebar-primary-foreground text-sidebar-foreground transition-colors flex items-center justify-center">
-                  <Plus size={20} />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>Create New</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
         </div>
 
         {/* Navigation Icons */}

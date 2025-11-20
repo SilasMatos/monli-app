@@ -158,7 +158,7 @@ export default function WelcomeScreen() {
             Vamos configurar sua conta em alguns passos simples
           </p>
         </div>
-        <WelcomeStepper currentStep={currentStep} steps={steps} />\
+        <WelcomeStepper currentStep={currentStep} steps={steps} />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <Card>
@@ -223,7 +223,7 @@ export default function WelcomeScreen() {
             </div>
           </form>
         </Form>
-        {process.env.NODE_ENV === 'development' && (
+        {/* {process.env.NODE_ENV === 'development' && (
           <div className="mt-8 p-4 bg-muted rounded-lg">
             <h3 className="font-semibold mb-2">Debug Info:</h3>
             <p className="text-sm">Step atual: {currentStep}</p>
@@ -239,7 +239,7 @@ export default function WelcomeScreen() {
               </pre>
             )}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )
