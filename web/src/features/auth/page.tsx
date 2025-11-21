@@ -1,5 +1,6 @@
 import React from 'react'
 import DotGrid from '@/components/ui/dot-grid'
+import { LoginForm } from '@/components/login-form'
 
 function AuthPage() {
   return (
@@ -24,7 +25,9 @@ function AuthPage() {
           </div>
         </div>
       </div>
-      <div className="w-1/2 h-full"></div>
+      <div className="w-1/2 h-full flex items-center justify-center">
+        <LoginForm />
+      </div>
     </div>
   )
 }

@@ -56,8 +56,8 @@ export function LoginForm({
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
-      <Card>
+    <div className={cn('flex flex-col gap-6 max-w-sm', className)} {...props}>
+      <Card className="bg-transparent">
         <CardHeader className="text-center">
           <CardTitle className="text-xl">{t('welcomeBack')}</CardTitle>
           <CardDescription>{t('loginWithSocial')}</CardDescription>
