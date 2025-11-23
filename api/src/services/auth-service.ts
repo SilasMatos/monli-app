@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import speakeasy from 'speakeasy'
 import QRCode from 'qrcode'
 import { db } from '../db'
-import { users, accessLogs } from '../db/schema'
+import { users, accessLogs, userProfiles } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { env } from '../env'
 import { uuidv7 } from 'uuidv7'
@@ -125,8 +125,9 @@ export class AuthService {
     })
 
     // Create user profile with default values
+    let userProfile = null
     try {
-      await profileService.createProfile({
+      userProfile = await profileService.createProfile({
         userId: newUser.id,
       })
     } catch (error) {
@@ -154,6 +155,10 @@ export class AuthService {
         name: newUser.name,
         emailVerified: newUser.emailVerified,
         twoFactorEnabled: newUser.twoFactorEnabled,
+        // User preferences from profile
+        theme: userProfile?.theme || 'light',
+        language: userProfile?.language || 'pt-BR',
+        avatar: userProfile?.avatar || null,
       },
       tokens,
     }
@@ -170,7 +175,6 @@ export class AuthService {
     if (!user || !user.password) {
       throw new Error('Invalid credentials')
     }
-
 
     if (!user.isActive) {
       throw new Error('Account is deactivated')
@@ -217,6 +221,11 @@ export class AuthService {
       isFirstLoginToday = true
     }
 
+    // Get user profile for preferences
+    const userProfile = await db.query.userProfiles.findFirst({
+      where: eq(userProfiles.userId, user.id),
+    })
+
     // Update lastLoginAt
     await db
       .update(users)
@@ -239,7 +248,7 @@ export class AuthService {
       userId: user.id,
       email: user.email,
     })
-
+    console.log('Generated tokens for user:', user.id)
     return {
       user: {
         id: user.id,
@@ -247,6 +256,10 @@ export class AuthService {
         name: user.name,
         emailVerified: user.emailVerified,
         twoFactorEnabled: user.twoFactorEnabled,
+        // User preferences from profile
+        theme: userProfile?.theme || 'light',
+        language: userProfile?.language || 'pt-BR',
+        avatar: userProfile?.avatar || null,
       },
       tokens,
       isFirstLoginEver,

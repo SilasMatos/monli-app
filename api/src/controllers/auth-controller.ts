@@ -33,10 +33,21 @@ export class AuthController {
         maxAge: 30 * 24 * 60 * 60, // 30 days
       })
 
+      console.log('User registered:', result)
       return reply.status(201).send({
         success: true,
         data: {
-          user: result.user,
+          user: {
+            id: result.user.id,
+            email: result.user.email,
+            name: result.user.name,
+            emailVerified: result.user.emailVerified,
+            twoFactorEnabled: result.user.twoFactorEnabled,
+            theme: result.user.theme,
+            language: result.user.language,
+            avatar: result.user.avatar,
+          },
+          isFirstTime: true,
         },
       })
     } catch (error) {
@@ -107,11 +118,22 @@ export class AuthController {
         path: '/',
         maxAge: 30 * 24 * 60 * 60, // 30 days
       })
-
+      console.log('User logged in:', result)
+      console.log('User object being sent:', JSON.stringify(result.user, null, 2))
       return reply.status(200).send({
         success: true,
         data: {
-          user: result.user,
+          user: {
+            id: result.user.id,
+            email: result.user.email,
+            name: result.user.name,
+            emailVerified: result.user.emailVerified,
+            twoFactorEnabled: result.user.twoFactorEnabled,
+            theme: result.user.theme,
+            language: result.user.language,
+            avatar: result.user.avatar,
+          },
+          isFirstTime: result.isFirstLoginEver,
           isFirstLoginEver: result.isFirstLoginEver,
           isFirstLoginToday: result.isFirstLoginToday,
         },
