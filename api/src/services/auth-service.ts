@@ -225,6 +225,7 @@ export class AuthService {
     const userProfile = await db.query.userProfiles.findFirst({
       where: eq(userProfiles.userId, user.id),
     })
+    console.log('User profile found:', userProfile)
 
     // Update lastLoginAt
     await db

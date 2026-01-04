@@ -120,7 +120,8 @@ export class AuthController {
       })
       console.log('User logged in:', result)
       console.log('User object being sent:', JSON.stringify(result.user, null, 2))
-      return reply.status(200).send({
+      
+      const responseData = {
         success: true,
         data: {
           user: {
@@ -137,7 +138,10 @@ export class AuthController {
           isFirstLoginEver: result.isFirstLoginEver,
           isFirstLoginToday: result.isFirstLoginToday,
         },
-      })
+      }
+      
+      console.log('Response being sent:', JSON.stringify(responseData, null, 2))
+      return reply.status(200).send(responseData)
     } catch (error) {
       if (error instanceof Error) {
         return reply.status(401).send({
